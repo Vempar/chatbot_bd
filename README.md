@@ -1,10 +1,10 @@
 
 
-![GitHub repo size](https://img.shields.io/github/repo-size/Vempar/chatbot_db)
-![GitHub stars](https://img.shields.io/github/stars/Vempar/chatbot_db?style=social)
-![GitHub forks](https://img.shields.io/github/forks/Vempar/chatbot_db?style=social)
-![GitHub last commit](https://img.shields.io/github/last-commit/Vempar/chatbot_db)
-![License](https://img.shields.io/github/license/Vempar/chatbot_db)
+![GitHub repo size](https://img.shields.io/github/repo-size/Vempar/chatbot_bd)
+![GitHub stars](https://img.shields.io/github/stars/Vempar/chatbot_bd?style=social)
+![GitHub forks](https://img.shields.io/github/forks/Vempar/chatbot_bd?style=social)
+![GitHub last commit](https://img.shields.io/github/last-commit/Vempar/chatbot_bd)
+![License](https://img.shields.io/github/license/Vempar/chatbot_bd)
 
 ## 🚧 En desarrollo...
 
