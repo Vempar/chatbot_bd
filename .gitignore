@@ -1,5 +1,13 @@
 
 __pycache__/
 .venv/
-components/token.py
+components/tokens.py
+components/analisis.py
+components/charts.py
+components/database.py
+assets/bds.bd
 assets/bds.db
+docs/
+data/database.db
+data/database_byd.db
+data/bds.bd

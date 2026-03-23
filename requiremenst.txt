@@ -1,4 +1,0 @@
-pandas==3.0.1
-numpy==2.4.3
-dotenv==0.9.9   
-python-telegram-bot==22.7
