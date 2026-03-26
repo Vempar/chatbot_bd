@@ -1,6 +1,8 @@
+from matplotlib.pyplot import show
 import sqlite3
 import pandas as pd
 import datetime as dt
+import matplotlib.pyplot as plt
 
 
 df = pd.read_sql_query("SELECT * FROM EnergyConsumption", sqlite3.connect('./data/database_byd.db'))
@@ -25,7 +27,7 @@ fuel_km_100= ((fuel_total/trip_km_total)*100)
 #porcentaje viajes solo electrico en porcentaje
 trip_fuel_up=((df["fuel"]==0).value_counts(True))
 #media gasto electricidad
-elec_mean=(df["electricity"].mean())
+elec_mean=((df["electricity"]>0).mean())
 
 print (df.describe(include='object'))
 print (elec_mean)

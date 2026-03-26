@@ -1,21 +1,18 @@
 
 import os
-from datetime import date
 import logging
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Application, ContextTypes, MessageHandler, filters, CommandHandler, CallbackQueryHandler
-from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
-from telegram_bot_calendar.base import max_date, min_date 
 import components.globals as globals
 import components.tokens as tokens
+import components.database_byd as database_byd
 
+#importamos el token de telegram
 
 #telegram_token=os.getenv("TOKEN")
-telegram_token=globals.personal_token
-
+telegram_token=tokens.personal_token
 
 #menu inicio con las opciones de turno
-
 
 async def start_command(update,context):
     # Definimos el teclado de respuesta
@@ -53,6 +50,24 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await help_command(update, context)
     else:
         await update.message.reply_text("Lo siento, todavía no sé hacer eso. ", reply_markup=markup)
+
+async def db_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    document = update.message.document
+    
+    # Comprobamos que el archivo se llame exactamente EC_Database.db
+    if document.file_name == 'EC_database.db':
+        # Nos aseguramos de que la carpeta data exista y guardamos la ruta
+        os.makedirs('./data', exist_ok=True)
+        file_path = os.path.join('./data', 'EC_database.db')
+        # Obtenemos el archivo de los servidores de Telegram
+        new_file = await context.bot.get_file(document.file_id)
+        # Lo descargamos (reemplazará el anterior si existe)
+        await new_file.download_to_drive(file_path)
+        
+        await update.message.reply_text('¡Base de datos EC_Database.db recibida, guardada y actualizada con éxito.')
+    else:
+        await update.message.reply_text(f'Archivo ignorado. Por favor, envía un archivo llamado exactamente "EC_Database.db". Recibido: {document.file_name}')
+
 #configuramos el logging para que muestre los errores
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.WARNING)
 logger = logging.getLogger(__name__)
@@ -67,10 +82,12 @@ def main():
     bot.add_handler(CommandHandler("help", help_command))
     bot.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, start_command))
     bot.add_handler(MessageHandler(filters.PHOTO, photo_handler))
+    bot.add_handler(MessageHandler(filters.Document.ALL, db_handler))
     bot.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == '__main__':
     main()
+
 
 
 
