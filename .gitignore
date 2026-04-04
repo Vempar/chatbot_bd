@@ -5,6 +5,7 @@ components/tokens.py
 components/analisis.py
 components/charts.py
 components/database.py
+components/pruebas.py
 assets/bds.bd
 assets/bds.db
 docs/
@@ -12,3 +13,4 @@ data/database.db
 data/database_byd.db
 data/bds.bd
 data/EC_database.db
+data/

@@ -67,6 +67,24 @@ async def db_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         await update.message.reply_text('¡Base de datos EC_Database.db recibida, guardada y actualizada con éxito.')
     else:
         await update.message.reply_text(f'Archivo ignorado. Por favor, envía un archivo llamado exactamente "EC_Database.db". Recibido: {document.file_name}')
+#configuramos una funcion para cuando nos suban el archivo EC_database.jpg lo deje en EC_database.dblocal y lo renombre a EC_database.db
+
+async def db_handler_jpg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    document = update.message.document
+    
+    # Comprobamos que el archivo se llame exactamente EC_database.jpg
+    if document.file_name == 'EC_database.jpg':
+        # Nos aseguramos de que la carpeta data exista y guardamos la ruta
+        os.makedirs('./data', exist_ok=True)
+        file_path = os.path.join('./data', 'EC_database.jpg')
+        # Obtenemos el archivo de los servidores de Telegram
+        new_file = await context.bot.get_file(document.file_id)
+        # Lo descargamos (reemplazará el anterior si existe)
+        await new_file.download_to_drive(file_path)
+        
+        await update.message.reply_text('¡Base de datos EC_database.jpg recibida, guardada y actualizada con éxito.')
+    else:
+        await update.message.reply_text(f'Archivo ignorado. Por favor, envía un archivo llamado exactamente "EC_database.jpg". Recibido: {document.file_name}')
 
 #configuramos el logging para que muestre los errores
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.WARNING)
@@ -82,7 +100,8 @@ def main():
     bot.add_handler(CommandHandler("help", help_command))
     bot.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, start_command))
     bot.add_handler(MessageHandler(filters.PHOTO, photo_handler))
-    bot.add_handler(MessageHandler(filters.Document.ALL, db_handler))
+    #bot.add_handler(MessageHandler(filters.Document.ALL, db_handler))
+    bot.add_handler(MessageHandler(filters.Document.ALL, db_handler_jpg))
     bot.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == '__main__':
