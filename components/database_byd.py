@@ -5,7 +5,7 @@ import datetime as dt
 import matplotlib.pyplot as plt
 
 
-df = pd.read_sql_query("SELECT * FROM EnergyConsumption", sqlite3.connect('./data/database_byd.db'))
+df = pd.read_sql_query("SELECT * FROM EnergyConsumption", sqlite3.connect('./data/EC_database.db'))
 #tiempo de viaje mas largo
 trip_long=(df["duration"].max())
 #viaje mas largo
@@ -28,6 +28,8 @@ fuel_km_100= ((fuel_total/trip_km_total)*100)
 trip_fuel_up=((df["fuel"]==0).value_counts(True))
 #media gasto electricidad
 elec_mean=((df["electricity"]>0).mean())
+#consumo electricidad
+elec_total=(sum(df["electricity"]))
 
 print (df.describe(include='object'))
 print (elec_mean)
